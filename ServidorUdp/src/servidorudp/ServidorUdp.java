@@ -29,20 +29,37 @@ public class ServidorUdp {
 
                 // =================== Servidor Processa a mensagem
                 String mensagem = new String(request.getData());
-                int tipo = Character.getNumericValue(mensagem.charAt(0));
-                System.out.println(" oi");
-                int filme = Character.getNumericValue(mensagem.charAt(2));
-                int resp;
-                
+                String resposta ="";
+
+                String[] partes = mensagem.split(";");
+                int tipo, filme, cliente, nota, resp = 0;
+                tipo = Integer.parseInt(partes[0].trim());
+
                 switch (tipo) {
                     case 1 -> {
-                        resp = bd.solicitarFIlme(filme);
+                        cliente = Integer.parseInt(partes[1].trim());
+                        resp = bd.solicitarFIlme(cliente);
+                        resposta = String.valueOf(resp);
+                    }
+                    case 2 -> {
+                        filme = Integer.parseInt(partes[2].trim());
+                        cliente = Integer.parseInt(partes[1].trim());
+                        nota = Integer.parseInt(partes[3].trim());
+                        bd.inserirNota(cliente, filme, nota);
+                        bd.imprimirMatriz();
+                        resposta = String.valueOf(resp);
+                    }
+                    case 3 -> {
+                        // blabla
+                    }
+                    case 4 -> {
+                        cliente = Integer.parseInt(partes[1].trim());
+                        resposta = bd.listaRecomendacao(cliente).trim();
                     }
                     default ->
                         throw new AssertionError();
                 }
 
-                String resposta = String.valueOf(resp);
                 byte[] todasMSg = resposta.getBytes();
 
                 // =================== Envio da Mensagem Resposta

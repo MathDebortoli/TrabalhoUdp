@@ -39,6 +39,30 @@ public class BasedeDados {
         return 10;
     }
 
+    public void inserirNota(int cliente, int filme, int nota) {
+        matriz[cliente][filme] = nota;
+    }
+
+    public void imprimirMatriz() {
+        for (int i = 0; i < 10; i++) {
+            for (int p = 0; p < 20; p++) {
+                System.out.print(matriz[i][p] + "|");
+            }
+            System.out.println("");
+        }
+    }
+
+    public String listaRecomendacao(int cliente) {
+        String msg ="";
+        for (int i = 0; i < 20; i++) {
+            if(matriz[cliente][i]!=0){
+                msg+=i;
+            }
+        }
+        System.out.println("a mensagem foi: " + msg);
+        return msg;
+    }
+
     public String le() {
         String s = "\n";
         int fim = lista.size();
