@@ -17,7 +17,6 @@ public class Formulario extends javax.swing.JFrame {
      */
     public Formulario() {
         initComponents();
-        ClienteUdp cliente = new ClienteUdp();
     }
 
     /**
@@ -64,7 +63,7 @@ public class Formulario extends javax.swing.JFrame {
 
         filmeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Star Wars 2", "Up", "300", "American Pyscho", "Rush", "Moon", "Heat", "Dune", "Life", "Troy", "Memento", "Rocky", "Alien", "Drive", "Fargo", "Pi", "Amélie", "Seven", "Whiplash", "Ghost" }));
 
-        notaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3" }));
+        notaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
         notaCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 notaComboActionPerformed(evt);
@@ -148,26 +147,28 @@ public class Formulario extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(127, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(117, 117, 117))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(24, 24, 24)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButton4))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(270, 270, 270))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,9 +183,9 @@ public class Formulario extends javax.swing.JFrame {
                     .addComponent(jButton4))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,7 +203,7 @@ public class Formulario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //String msg = jTextField3.getText();
+        //Solicitar Filme
         String msg = "1;" + clienteCombo.getSelectedIndex();
 
         ClienteUdp cliente = new ClienteUdp();
@@ -211,16 +212,10 @@ public class Formulario extends javax.swing.JFrame {
         if (resposta == null) {
             JOptionPane.showMessageDialog(null, "Todos os Filmes do Cliente: " + clienteCombo.getSelectedItem() + " Já foram avaliados!", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
-            
-            System.out.println(resposta);
-            int var = Integer.parseInt(resposta);
-            var++;
-            System.out.println("o var: " + var);
-            filmeCombo.setSelectedIndex(var);
+            filmeCombo.setSelectedIndex(Integer.parseInt(resposta.trim()));
             filmeCombo.requestFocus();
             notaCombo.setSelectedIndex(0);
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void clienteComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteComboActionPerformed
@@ -232,7 +227,19 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_notaComboActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        //Salvar nota
+        String msg = "2;" + clienteCombo.getSelectedIndex();
+        msg = msg + ";" + filmeCombo.getSelectedIndex() + ";" + (notaCombo.getSelectedIndex() + 1);
+
+        ClienteUdp cliente = new ClienteUdp();
+        String resposta = cliente.enviaMensagem(msg);
+
+        if (Integer.parseInt(resposta.trim()) == 0) {
+            JOptionPane.showMessageDialog(null, "Inserido com Sucesso!", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao Inserir nota do Filme: " + filmeCombo.getSelectedItem(), "Sucesso", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -240,7 +247,17 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        //Lista de Avaliações
+        String msg = "4;" + clienteCombo.getSelectedIndex();
+
+        ClienteUdp cliente = new ClienteUdp();
+        String resposta = cliente.enviaMensagem(msg);
+        resposta = resposta.trim();
+        String formatacao = "";
+        for(int i=0; i < resposta.length();i++){
+            formatacao += i+"° " + filmeCombo.getItemAt(Character.getNumericValue(resposta.charAt(i))) + "\n";
+        }
+        jTextArea1.setText(formatacao);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
