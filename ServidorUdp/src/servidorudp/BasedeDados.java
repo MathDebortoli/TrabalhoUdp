@@ -31,12 +31,12 @@ public class BasedeDados {
     }
 
     public int solicitarFIlme(int cliente) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             if (matriz[cliente][i] == 0) {
                 return i;
             }
         }
-        return 10;
+        return -1;
     }
 
     public void inserirNota(int cliente, int filme, int nota) {
@@ -50,16 +50,56 @@ public class BasedeDados {
             }
             System.out.println("");
         }
+        System.out.println("");
+    }
+
+    public int calcularDistEucl(int cliente) {
+        int pessoa = -1, i;
+        double soma = 0, menor = 0;
+
+        for (i = 0; i < 10; i++) {
+            if (i == cliente) {
+                continue;
+            }
+            for (int j = 0; j < 20; j++) {
+                soma += Math.pow(2, matriz[cliente][j] - matriz[i][j]); //ELeva todos ao quadrado e soma
+            }
+            soma = Math.sqrt(soma); //Tira raiz quadrada
+            if (menor == 0 || soma < menor) {
+                menor = soma;
+                soma = 0;
+                pessoa = i;
+            }
+        }
+        return receberRecomendacao(cliente,pessoa);
+    }
+
+    public int receberRecomendacao(int cliente, int pessoaParecida) {
+        int notamaior = 0, filme = -1;
+
+        if (pessoaParecida == -1) {
+            return -1;
+        }
+
+        for (int i = 0; i < 20; i++) {
+            if (matriz[cliente][i] == 0 && matriz[pessoaParecida][i] != 0) {
+                if (matriz[pessoaParecida][i] > notamaior) {
+                    notamaior = matriz[pessoaParecida][i];
+                    filme = i;
+                }
+            }
+        }
+        return filme;
     }
 
     public String listaRecomendacao(int cliente) {
-        String msg ="";
+        String msg = "";
         for (int i = 0; i < 20; i++) {
-            if(matriz[cliente][i]!=0){
-                msg+=i;
+            if (matriz[cliente][i] != 0) {
+                msg += i;
+                msg += matriz[cliente][i];
             }
         }
-        System.out.println("a mensagem foi: " + msg);
         return msg;
     }
 
