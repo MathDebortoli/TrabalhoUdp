@@ -120,6 +120,9 @@ public class Formulario extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jLabel4.setBackground(new java.awt.Color(255, 0, 0));
+        jLabel4.setFont(new java.awt.Font("Liberation Sans", 3, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("Servidor");
 
         jButton2.setText("Salvar Nota");
@@ -154,21 +157,23 @@ public class Formulario extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4))))
+                                .addComponent(jButton4))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(122, 122, 122)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(270, 270, 270))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(231, 231, 231))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,20 +274,28 @@ public class Formulario extends javax.swing.JFrame {
         resposta = resposta.trim();
         String formatacao = "";
 
-        for (int i = 0; i < resposta.length() - 1; i += 2) {
-            // Converte o caractere para um índice numérico
-            int index = Character.getNumericValue(resposta.charAt(i));
-
-            // Verifica se o índice está dentro do intervalo válido do ComboBox
-            if (index >= 0 && index < filmeCombo.getItemCount()) {
-                formatacao += "Filme: " + filmeCombo.getItemAt(index)
-                        + " --> Nota : " + resposta.charAt(i + 1) + "\n";
-            } else {
-                // Tratamento caso o índice seja inválido (fora do intervalo)
-                formatacao += "Erro: Índice de filme inválido (" + index + ").\n";
-            }
+        if (resposta.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Sem Notas Registradas!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            jTextArea1.setText("");
+            return;
         }
 
+        String[] partes = resposta.split(";");
+        int j = 0;
+
+        // Ajuste o loop para garantir que 'i + 1' nunca exceda o limite
+        for (int i = 0; i < partes.length - 1; i += 2) {
+            try {
+                j = i;
+                // Verifica se os índices são válidos antes de acessar
+                String filme = filmeCombo.getItemAt(Integer.parseInt(partes[j]));
+                String nota = partes[j + 1];
+                formatacao += ("Filme: " + filme + " Nota -> " + nota + "\n");
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                System.err.println("Erro ao processar os dados: " + e.getMessage());
+                break; // Encerra o loop se ocorrer um erro para evitar mais invasões de memória
+            }
+        }
         jTextArea1.setText(formatacao);
     }//GEN-LAST:event_jButton4ActionPerformed
 
