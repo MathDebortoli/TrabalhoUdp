@@ -58,20 +58,22 @@ public class BasedeDados {
         double soma = 0, menor = 0;
 
         for (i = 0; i < 10; i++) {
+            soma = 0;
             if (i == cliente) {
                 continue;
             }
             for (int j = 0; j < 20; j++) {
-                soma += Math.pow(2, matriz[cliente][j] - matriz[i][j]); //ELeva todos ao quadrado e soma
+                soma += Math.pow(matriz[cliente][j] - matriz[i][j], 2); //ELeva todos ao quadrado e soma
             }
             soma = Math.sqrt(soma); //Tira raiz quadrada
+            System.out.println("a soma foi: " + soma);
             if (menor == 0 || soma < menor) {
                 menor = soma;
-                soma = 0;
                 pessoa = i;
             }
         }
-        return receberRecomendacao(cliente,pessoa);
+        System.out.println("pessoa: " + pessoa);
+        return receberRecomendacao(cliente, pessoa);
     }
 
     public int receberRecomendacao(int cliente, int pessoaParecida) {
@@ -96,9 +98,12 @@ public class BasedeDados {
         String msg = "";
         for (int i = 0; i < 20; i++) {
             if (matriz[cliente][i] != 0) {
-                msg += i;
-                msg += matriz[cliente][i];
+                msg += i + ";";
+                msg += matriz[cliente][i] + ";";
             }
+        }
+        if (!msg.isEmpty()) {
+            msg = msg.substring(0, msg.length() - 1);
         }
         return msg;
     }
