@@ -67,7 +67,7 @@ public class BasedeDados {
             }
             soma = Math.sqrt(soma); //Tira raiz quadrada
             System.out.println("a soma foi: " + soma);
-            if (menor == 0 || soma < menor) {
+            if ((menor == 0 || soma < menor) && soma !=1 && soma != 0) {
                 menor = soma;
                 pessoa = i;
             }
