@@ -29,7 +29,7 @@ public class ServidorUdp {
 
                 // =================== Servidor Processa a mensagem
                 String mensagem = new String(request.getData());
-                String resposta ="";
+                String resposta = "";
 
                 String[] partes = mensagem.split(";");
                 int tipo, filme, cliente, nota, resp = 0;
@@ -50,7 +50,8 @@ public class ServidorUdp {
                         resposta = String.valueOf(resp);
                     }
                     case 3 -> {
-                        // blabla
+                        cliente = Integer.parseInt(partes[1].trim());
+                        resposta = String.valueOf(bd.calcularDistEucl(cliente)).trim();
                     }
                     case 4 -> {
                         cliente = Integer.parseInt(partes[1].trim());

@@ -54,14 +54,14 @@ public class Formulario extends javax.swing.JFrame {
 
         jLabel3.setText("Nota:");
 
-        clienteCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Raissa", "Marcio", "José", "Mário", "Caio", "Leandro", "Matheus", "Josué", "Marcos", "Cecília" }));
+        clienteCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Raissa", "Zé", "Martha", "Ana", "Caio", "Leandro", "Matheus", "Josué", "Marcos", "Cecília" }));
         clienteCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clienteComboActionPerformed(evt);
             }
         });
 
-        filmeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Star Wars 2", "Up", "300", "American Pyscho", "Rush", "Moon", "Heat", "Dune", "Life", "Troy", "Memento", "Rocky", "Alien", "Drive", "Fargo", "Pi", "Amélie", "Seven", "Whiplash", "Ghost" }));
+        filmeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Star Wars 2", "Tempos Modernos", "300", "American Pyscho", "Rush", "Moon", "Heat", "Dune", "Life", "Troy", "Memento", "Rocky", "Alien", "Drive", "Fargo", "Pi", "Amélie", "Seven", "Whiplash", "Ghost" }));
 
         notaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
         notaCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +120,9 @@ public class Formulario extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jLabel4.setBackground(new java.awt.Color(255, 0, 0));
+        jLabel4.setFont(new java.awt.Font("Liberation Sans", 3, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("Servidor");
 
         jButton2.setText("Salvar Nota");
@@ -154,21 +157,23 @@ public class Formulario extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4))))
+                                .addComponent(jButton4))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(122, 122, 122)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(270, 270, 270))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(231, 231, 231))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,8 +214,8 @@ public class Formulario extends javax.swing.JFrame {
         ClienteUdp cliente = new ClienteUdp();
         String resposta = cliente.enviaMensagem(msg);
 
-        if (resposta == null) {
-            JOptionPane.showMessageDialog(null, "Todos os Filmes do Cliente: " + clienteCombo.getSelectedItem() + " Já foram avaliados!", "Erro", JOptionPane.ERROR_MESSAGE);
+        if (Integer.parseInt(resposta.trim()) == -1) {
+            JOptionPane.showMessageDialog(null, "Todos os Filmes já Foram Avaliados pelo Cliente: " + clienteCombo.getSelectedItem() + "\nJá foram Avaliados!", "ERRO!", JOptionPane.ERROR_MESSAGE);
         } else {
             filmeCombo.setSelectedIndex(Integer.parseInt(resposta.trim()));
             filmeCombo.requestFocus();
@@ -237,13 +242,27 @@ public class Formulario extends javax.swing.JFrame {
         if (Integer.parseInt(resposta.trim()) == 0) {
             JOptionPane.showMessageDialog(null, "Inserido com Sucesso!", "Sucesso", JOptionPane.PLAIN_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Erro ao Inserir nota do Filme: " + filmeCombo.getSelectedItem(), "Sucesso", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Inserir nota do Filme: " + filmeCombo.getSelectedItem(), "ERRO!", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        //Realizar Recomendação
+        String msg = "3;" + clienteCombo.getSelectedIndex();
+
+        ClienteUdp cliente = new ClienteUdp();
+        String resposta = cliente.enviaMensagem(msg);
+        int filme = Integer.parseInt(resposta.trim());
+
+        System.out.println(" o filme eh: " + filme);
+
+        if (filme == -1) {
+            JOptionPane.showMessageDialog(null, "Erro ao Receber Recomendação\nNenhum filme com Nota!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        filmeCombo.setSelectedIndex(filme);
+        filmeCombo.requestFocus();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -254,8 +273,28 @@ public class Formulario extends javax.swing.JFrame {
         String resposta = cliente.enviaMensagem(msg);
         resposta = resposta.trim();
         String formatacao = "";
-        for(int i=0; i < resposta.length();i++){
-            formatacao += i+"° " + filmeCombo.getItemAt(Character.getNumericValue(resposta.charAt(i))) + "\n";
+
+        if (resposta.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Sem Notas Registradas!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            jTextArea1.setText("");
+            return;
+        }
+
+        String[] partes = resposta.split(";");
+        int j = 0;
+
+        // Ajuste o loop para garantir que 'i + 1' nunca exceda o limite
+        for (int i = 0; i < partes.length - 1; i += 2) {
+            try {
+                j = i;
+                // Verifica se os índices são válidos antes de acessar
+                String filme = filmeCombo.getItemAt(Integer.parseInt(partes[j]));
+                String nota = partes[j + 1];
+                formatacao += ("Filme: " + filme + " Nota -> " + nota + "\n");
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                System.err.println("Erro ao processar os dados: " + e.getMessage());
+                break; // Encerra o loop se ocorrer um erro para evitar mais invasões de memória
+            }
         }
         jTextArea1.setText(formatacao);
     }//GEN-LAST:event_jButton4ActionPerformed
