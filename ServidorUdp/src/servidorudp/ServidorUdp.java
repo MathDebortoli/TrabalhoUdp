@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+//Leandro de Souza Amorim e Matheus Francisco Debortoli Silva
 package servidorudp;
 
 import java.net.*;
@@ -10,7 +7,7 @@ import java.io.*;
 /**
  *
  * @author matheus
- */
+ */ //fgfgf
 public class ServidorUdp {
 
     private static BasedeDados bd = null;
