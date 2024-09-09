@@ -1,4 +1,5 @@
 //Leandro de Souza Amorim e Matheus Francisco Debortoli Silva
+//SAlve
 package servidorudp;
 
 import java.util.ArrayList;
@@ -9,11 +10,9 @@ import java.util.ArrayList;
  */
 public class BasedeDados {
 
-    private ArrayList lista = null;
     private int matriz[][] = null;
 
     public BasedeDados() {
-        lista = new ArrayList();
         matriz = new int[10][20];
 
         for (int i = 0; i < 10; i++) {
@@ -21,10 +20,6 @@ public class BasedeDados {
                 matriz[i][p] = 0;
             }
         }
-    }
-
-    public void insere(String msg) {
-        lista.add(msg.trim());
     }
 
     public int solicitarFIlme(int cliente) {
@@ -128,15 +123,6 @@ public class BasedeDados {
             msg = msg.substring(0, msg.length() - 1);
         }
         return msg;
-    }
-
-    public String le() {
-        String s = "\n";
-        int fim = lista.size();
-        for (int pos = 0; pos < fim; pos++) {
-            s = s + "[" + (pos + 1) + "] " + (String) lista.get(pos) + "\n";
-        }
-        return s;
     }
 
 }
