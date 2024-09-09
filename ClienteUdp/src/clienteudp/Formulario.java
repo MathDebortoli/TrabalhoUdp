@@ -52,20 +52,10 @@ public class Formulario extends javax.swing.JFrame {
         jLabel3.setText("Nota:");
 
         clienteCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Raissa", "Zé", "Martha", "Ana", "Caio", "Leandro", "Matheus", "Josué", "Marcos", "Cecília" }));
-        clienteCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clienteComboActionPerformed(evt);
-            }
-        });
 
         filmeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Star Wars 2", "Tempos Modernos", "300", "American Pyscho", "Rush", "Moon", "Heat", "Dune", "Life", "Troy", "Memento", "Rocky", "Alien", "Drive", "Fargo", "Pi", "Amélie", "Seven", "Whiplash", "Ghost" }));
 
         notaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
-        notaCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notaComboActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -219,14 +209,6 @@ public class Formulario extends javax.swing.JFrame {
             notaCombo.setSelectedIndex(0);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void clienteComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_clienteComboActionPerformed
-
-    private void notaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notaComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notaComboActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Salvar nota

@@ -33,7 +33,7 @@ public class ClienteUdp {
     }
 
     public ClienteUdp(String nomeDNSservidor) {
-        nomeDNS = "matheus-pc"; //nome do computador que o servidor é executado
+        nomeDNS = ""; //nome do computador que o servidor é executado
         meuIP = null;
         serverPort = 6789;
     }
